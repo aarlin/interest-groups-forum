@@ -1,0 +1,352 @@
+{
+	"discussion_groups": [
+
+	{
+		"groupid" : "1000",
+		"groupname" : "comp.programming",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	
+	},
+
+	{
+		"groupid" : "2000",
+		"groupname" : "comp.os.threads",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{	
+		"groupid" : "3000",
+		"groupname" : "comp.lang.c",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "4000",
+		"groupname" : "comp.lang.python",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "5000",
+		"groupname" : "comp.lang.javascript",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "6000",
+		"groupname" : "sci.crypt",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "7000",
+		"groupname" : "rec.arts.ascii",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "8000",
+		"groupname" : "comp.lang.java",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "9000",
+		"groupname" : "comp.lang.perl",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "10000",
+		"groupname" : "comp.lang.json",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "11000",
+		"groupname" : "comp.lang.c++",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "12000",
+		"groupname" : "comp.lang.c#",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "13000",
+		"groupname" : "comp.lang.sml",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "14000",
+		"groupname" : "comp.lang.prolog",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "15000",
+		"groupname" : "comp.lang.assembly",
+		"posts" : [
+			{
+				"post_userid" : "100",
+				"timestamp:" : "Nov 12 19:34:02"
+			},
+
+			{
+
+				"post_userid" : "200",
+				"timestamp:" : "Nov 11 08:11:34"
+			},
+
+			{
+
+				"post_userid" : "300",
+				"timestamp:" : "Nov 10 22:05:47"
+			}
+		]
+	}
+
+
+	]
+}

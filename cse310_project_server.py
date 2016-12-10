@@ -5,58 +5,69 @@
 from socket import *
 from time import *
 from threading import *
+from json import *
+from pprint import *
+from re import *
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
 # SHOULD IT BE (!TCP!) OR UDP CONNECTION?
-serverPort = 12001 # HARD CODE SERVER PORT
+serverPort = 12003 # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))
 serverSocket.listen(100)  # ONLY LISTEN TO 100 CLIENTS
 
+ag_flag = 0
+sg_flag = 0
+rg_flag = 0
+
 while True:
+
     print('The server is setup and ready to receive from client\n')
     connectionSocket, addr = serverSocket.accept()
 ##      connectionSocket.send('===========================\r\n')
 ##      connectionSocket.send('|| Interest Groups Server ||\r\n')
 ##      connectionSocket.send('===========================\r\n')
 ##      connectionSocket.send('Awaiting commands...\r\n')
-    send_prompt = connectionSocket.send("CAN WE SEND?d\n")
-    received_data = connectionSocket.recv(128)  # RECEIVE LOGIN COMMAND
+    received_data = connectionSocket.recv(128)  # command
     commands = received_data.split(" ")
 
     print(commands[0])  # SHOULD BE FIRST command
 
-    while (commands[0] == "ag"):
-        display = 5
+    if (commands[0] == "ag"):
+        default_display = 5
         try:
-            if not commands[1]:
-                display = commands[1]
+            if commands[1] != "":
+                default_display = int(commands[1])
         except IndexError:
             pass
 
-        allgroups = "1. ( ) comp.programming \n2. ( ) comp.os.threads \n3. ( ) comp.lang.c \n4. (s) comp.lang.python \n5. (s) comp.lang.javascript \n"
+        ag_info = ""
+        with open('server.json') as serverfile:
+            server_data = load(serverfile)
+            for i in range(default_display):
+                ag_info += server_data['discussion_groups'][i]['groupname']
+                ag_info += '\n'
+        connectionSocket.sendall(ag_info.encode('UTF-8'))
 
-        connectionSocket.send(allgroups.encode('UTF-8'))
-        
-        ag_data = connectionSocket.recv(128)
-        ag_subcommands = ag_data.split(" ")
-        while (ag_subcommands[0] != "q"): 
-            if (ag_subcommands[0] == "s"):
-                print("S")
-                connectionSocket.send("AG 200 OK")
-            elif (ag_subcommands[0] == "u"):
-                print("U")
-                connectionSocket.send("AG 200 OK")
-            elif (ag_subcommands[0] == "n"):
-                print("N")
-                connectionSocket.send("AG 200 OK")
+        while (ag_flag == 0):
+            ag_data = connectionSocket.recv(128)
+            ag_subcommands = ag_data.split(" ")
+
+            if (ag_subcommands[0] == "n"):
+                print("Command n entered")
+                ag_more_info = ""
+                with open('server.json') as serverfile:
+                    server_data = load(serverfile)
+                    for i in range(default_display, default_display + int(ag_subcommands[1])):
+                        ag_more_info += server_data['discussion_groups'][i]['groupname']
+                        ag_more_info += '\n'
+                connectionSocket.sendall(ag_more_info.encode('UTF-8'))
+
             elif (ag_subcommands[0] == "q"):
-                print("SENT THE 200 OK")
-                print("Q")
-                commands[0] = ""
-                connectionSocket.send("AG 200 OK")
-            continue
-    while (commands[0] == "sg"):
+                print("Command q entered")
+                break
+
+    elif (commands[0] == "sg"):
         display = 5
         try:
             if not commands[1]:
@@ -70,7 +81,7 @@ while True:
                               "4.  27  sci.crpyt \n" +
                               "5.      rec.arts.ascii \n")
         continue
-    while (commands[0] == "rg"):
+    elif (commands[0] == "rg"):
         display = 5
         try:
             if not commands[2]:
@@ -91,10 +102,12 @@ while True:
                               "5.    Nov  9 12:46:10   Declaring custom exceptions \n")
 
         continue                
-    if (commands[0] == "logout"):
+    elif (commands[0] == "logout"):
         connectionSocket.send('Closing your connection\r\n')
         print('Closing connection to client\n')
-        connectionSocket.close()                       
+        connectionSocket.close()    
+    else:
+        connectionSocket.sendall("400 Bad Request\r\n")  
 
            
 serverSocket.close()            
