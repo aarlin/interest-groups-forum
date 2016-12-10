@@ -2,6 +2,11 @@
 # WHAT DO WE DO FOR SERVER AND NOT FOR CLIENT?
 # WE WANT TO CREATE A SERVER THAT WILL LOGIN CLIENTS THESE CLIENTS 
 
+##      connectionSocket.send('===========================\r\n')
+##      connectionSocket.send('|| Interest Groups Server ||\r\n')
+##      connectionSocket.send('===========================\r\n')
+##      connectionSocket.send('Awaiting commands...\r\n')
+
 from socket import *
 from time import *
 from threading import *
@@ -11,7 +16,7 @@ from re import *
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
 # SHOULD IT BE (!TCP!) OR UDP CONNECTION?
-serverPort = 12003 # HARD CODE SERVER PORT
+serverPort = 12000 # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))
 serverSocket.listen(100)  # ONLY LISTEN TO 100 CLIENTS
@@ -20,20 +25,27 @@ ag_flag = 0
 sg_flag = 0
 rg_flag = 0
 
+numelements = 0
+with open('server.json') as serverfile:
+    server_data = load(serverfile)
+    for n in server_data['discussion_groups']:
+        numelements += 1
+
+
+print('The server is setup and ready to receive from client\n')
+connectionSocket, addr = serverSocket.accept()
+
 while True:
+    print('Waiting for user command')
+    # with open('server.json', 'rb') as f:
+    #     connectionSocket.sendall(f.read())
 
-    print('The server is setup and ready to receive from client\n')
-    connectionSocket, addr = serverSocket.accept()
-##      connectionSocket.send('===========================\r\n')
-##      connectionSocket.send('|| Interest Groups Server ||\r\n')
-##      connectionSocket.send('===========================\r\n')
-##      connectionSocket.send('Awaiting commands...\r\n')
     received_data = connectionSocket.recv(128)  # command
-    commands = received_data.split(" ")
-
-    print(commands[0])  # SHOULD BE FIRST command
+    commands = received_data.split()
+    print(commands)
 
     if (commands[0] == "ag"):
+        print('ag command entered')
         default_display = 5
         try:
             if commands[1] != "":
@@ -57,17 +69,25 @@ while True:
                 print("Command n entered")
                 ag_more_info = ""
                 with open('server.json') as serverfile:
+
                     server_data = load(serverfile)
-                    for i in range(default_display, default_display + int(ag_subcommands[1])):
+                    read_n = default_display + int(ag_subcommands[1])
+                    if (read_n > numelements):
+                        read_n = numelements
+
+                    for i in range(default_display, read_n):
                         ag_more_info += server_data['discussion_groups'][i]['groupname']
                         ag_more_info += '\n'
                 connectionSocket.sendall(ag_more_info.encode('UTF-8'))
 
             elif (ag_subcommands[0] == "q"):
                 print("Command q entered")
+                print("Closed out of ag command")
+                connectionSocket.sendall("AG 500 CLOSE")
                 break
 
     elif (commands[0] == "sg"):
+        print('sg comamnd entered')
         display = 5
         try:
             if not commands[1]:
@@ -75,12 +95,25 @@ while True:
         except IndexError:
             pass
 
-        connectionSocket.send("1.  18  comp.programming \n" +
-                              "2.   2  comp.lang.c \n" +
-                              "3.   3  comp.lang.python \n" +
-                              "4.  27  sci.crpyt \n" +
-                              "5.      rec.arts.ascii \n")
-        continue
+        ag_info = ""
+        with open('server.json') as serverfile:
+            server_data = load(serverfile)
+            for i in range(numelements):
+                ag_info += server_data['discussion_groups'][i]['groupname']
+                ag_info += '\n'
+        connectionSocket.sendall(ag_info.encode('UTF-8'))
+
+        while (sg_flag == 0):
+            sg_data = connectionSocket.recv(128)
+            sg_subcommands = ag_data.split(" ")
+
+            if (sg_subcommands[0] == "q"):
+                print("Command q entered")
+                print("Closed out of ag command")
+                connectionSocket.sendall("SG 500 CLOSE")
+                break
+
+
     elif (commands[0] == "rg"):
         display = 5
         try:

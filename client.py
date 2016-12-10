@@ -8,18 +8,26 @@ port = int(argv[2])
 
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((host,port))
-sentence1 = input('Enter command: ')
 
-clientSocket.sendall(sentence1.encode('ascii'))
-rtn = clientSocket.recv(512)
-pprint(rtn.decode('ascii'))
-
-sub1 = input('Enter subcommands: ')
-while (sub1 != "q"):
-	clientSocket.sendall(sub1.encode('utf-8'))
+sentence1 = ""
+while (sentence1 != "logout"):
+	sentence1 = input('Enter command: ')
+	clientSocket.sendall(sentence1.encode('ascii'))
 	rtn = clientSocket.recv(512)
 	pprint(rtn.decode('ascii'))
-	sub1 = input('Enter subcommands: ')
+
+	sub1 = ""
+	while (sub1 != "q"):
+		sub1 = input('Enter subcommands: ')
+		clientSocket.sendall(sub1.encode('utf-8'))
+		rtn = clientSocket.recv(512)
+		pprint(rtn.decode('ascii'))
+		if (rtn == "AG 500 CLOSE"):
+			break
+	continue
+
+
+
 
 
 
