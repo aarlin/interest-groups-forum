@@ -14,7 +14,7 @@ from pprint import *
 from re import *
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
-serverPort = 12000                          # HARD CODE SERVER PORT
+serverPort = 12007                          # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))         
 serverSocket.listen(100)                    # ONLY LISTEN TO 100 CLIENTS
@@ -62,7 +62,7 @@ while True:
             for i in range(default_display):                                
                 ag_info += server_data['discussion_groups'][i]['groupname']     # GRAB EVERY DISCUSSION GROUP NAME UP TO NUMBER DISPLAYED
                 ag_info += '\n'         
-        connectionSocket.sendall(ag_info.encode('UTF-8'))                       # SEND OVER THE GROUP NAMES TO CLIENT
+        connectionSocket.sendall(ag_info.encode('ascii'))                       # SEND OVER THE GROUP NAMES TO CLIENT
 
         while (ag_flag == 0):                                                   # ENTERED SUBCOMMANDS FOR ag
             print('Entered subcommands state of ag')                
@@ -87,7 +87,7 @@ while True:
                             ag_more_info += '\n'
                         default_display += inc_n                                # INCREMENT THE LAST GROUP COUNTER SENT POINTER
                         inc_n = 0                                               
-                    connectionSocket.sendall(ag_more_info.encode('UTF-8'))      # SEND ALL N GROUPS REQUESTED
+                    connectionSocket.sendall(ag_more_info.encode('ascii'))      # SEND ALL N GROUPS REQUESTED
                     if (default_display == numelements):                        # WE HIT ALL THE GROUPS TO SEND
                         print("Printed all the groups available")
                         connectionSocket.sendall("AG 500 CLOSE")                # SEND SIGNAL TO KILL BREAK ag COMMAND STATE
@@ -113,7 +113,7 @@ while True:
             for i in range(numelements):
                 ag_info += server_data['discussion_groups'][i]['groupname']     # CONCAT GROUP NAME
                 ag_info += '\n'
-        connectionSocket.sendall(ag_info.encode('UTF-8'))
+        connectionSocket.sendall(ag_info.encode('ascii'))
 
         while (sg_flag == 0):                                                   # ENTERED sg SUBCOMMAND STATE
             sg_data = connectionSocket.recv(128)                    
@@ -149,6 +149,7 @@ while True:
         rg_info = ""
         with open('server.json') as serverfile:                                                         # OPEN UP JSON FILE
             server_data = load(serverfile)                  
+            print(numelements)
             for i in range(numelements):                                                                # FOR ALL GROUPS
                 if (server_data['discussion_groups'][i]['groupname'] == gname):                         # IF GROUP NAME = gname
                     for j in server_data['discussion_groups'][i]['posts']:                              # COUNT NUMBER OF POSTS IN THAT GROUP
@@ -167,12 +168,10 @@ while True:
                         rg_info += ','
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['timestamp']         # GRAB TIMESTAMP
                         rg_info += '\n'
-                    default_display += inc_n
-                    inc_n = 0
-
-        connectionSocket.sendall(rg_info.encode('UTF-8'))                                       # SEND NUMBER OF POSTS REQUESTED
+        connectionSocket.sendall(rg_info.encode('ascii'))                                       # SEND NUMBER OF POSTS REQUESTED
 
         while (rg_flag == 0):                                                                   # ENTER rg SUBCOMMAND STATE
+            inc_n = 0
             rg_data = connectionSocket.recv(128)
             rg_subcommands = rg_data.split(" ")
 
@@ -185,7 +184,7 @@ while True:
                         server_data = load(serverfile)                                          # LOAD JSON FILE
                         read_n = default_display + int(rg_subcommands[1])                       # READ UP TILL THIS VARIABLE
                         if (read_n > postnum):                                                  # IF VARIABLE GREATER THAN POSTNUM OF THIS GROUP
-                            read_n = postnum                                                    # SET VARIABLE TO NUMBER OF POSTS
+                            read_n = postnum + 1                                                # SET VARIABLE TO NUMBER OF POSTS
 
                         for i in range(numelements):                                            # GO THROUGH ALL GROUPS
                             if (server_data['discussion_groups'][i]['groupname'] == gname):     # IF GROUP NAME = gname
@@ -203,8 +202,8 @@ while True:
                                     rg_more_info += '\n'
                                 default_display += inc_n
                                 inc_n = 0
-                        connectionSocket.sendall(rg_more_info.encode('UTF-8'))  # SEND THE POSTS TO CLIENT
-                        if (default_display == postnum):                        # WE HIT ALL THE GROUPS TO SEND
+                        connectionSocket.sendall(rg_more_info.encode('ascii'))  # SEND THE POSTS TO CLIENT
+                        if (default_display > postnum):                        # WE HIT ALL THE GROUPS TO SEND
                             print("Printed all the groups available")
                             connectionSocket.sendall("RG 500 CLOSE")           # SEND SIGNAL TO KILL BREAK ag COMMAND STATE
                             break
