@@ -12,19 +12,20 @@ clientSocket.connect((host,port))
 sentence1 = ""
 while (sentence1 != "logout"):
 	sentence1 = input('Enter command: ')
-	clientSocket.sendall(sentence1.encode('ascii'))
-	rtn = clientSocket.recv(512)
-	pprint(rtn.decode('ascii'))
-
-	sub1 = ""
-	while (sub1 != "q"):
-		sub1 = input('Enter subcommands: ')
-		clientSocket.sendall(sub1.encode('utf-8'))
-		rtn = clientSocket.recv(512)
-		pprint(rtn.decode('ascii'))
-		if (rtn == "AG 500 CLOSE"):
-			break
-	continue
+	clientSocket.sendall(sentence1.encode('utf-8'))
+	rtn = clientSocket.recv(512).decode('utf-8')
+	pprint(rtn)
+	
+	if (rtn != "BAD COMMAND"):
+		sub1 = ""
+		while (sub1 != "q"):
+			sub1 = input('Enter subcommands: ')
+			clientSocket.sendall(sub1.encode('utf-8'))
+			rtn = clientSocket.recv(512)
+			pprint(rtn.decode('ascii'))
+			# if (rtn == "AG 500 CLOSE"):
+			# 	break
+		continue
 
 
 
