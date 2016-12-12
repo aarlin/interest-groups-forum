@@ -1,9 +1,6 @@
 # SERVER SIDE OF CSE310 PROJECT
 
-# with open('server.json', 'rb') as f:
-#     connectionSocket.sendall(f.read())
 
-# PROBLEMS WITH N COUNTER NOT WORKING
 # PROBLEMS WITH BADLY FORMATTED COMMANDS
 
 from socket import *
@@ -16,7 +13,7 @@ from StringIO import *
 
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
-serverPort = 12002                          # HARD CODE SERVER PORT
+serverPort = 12001                          # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))         
 serverSocket.listen(100)                    # ONLY LISTEN TO 100 CLIENTS
@@ -118,13 +115,19 @@ while True:
     elif (commands[0] == "sg"):                                                 # IF CLIENT COMMAND IS sg
         print('Entered command state of sg')
         default_display = numelements                                           # WE WILL SEND ALL GROUPS, CLIENT KNOWS WHICH THEY ARE SUBSCRIBE TO
+        postnum = 0
 
         ag_info = ""                                                                
         with open('server.json') as serverfile:                                 # OPEN JSON FILE TO GRAB ALL THE GROUPS
             server_data = load(serverfile)
             for i in range(numelements):
                 ag_info += server_data['discussion_groups'][i]['groupname']     # CONCAT GROUP NAME
+                for j in server_data['discussion_groups'][i]['posts']:                              # COUNT NUMBER OF POSTS IN THAT GROUP
+                    postnum += 1
+                ag_info += '*'
+                ag_info += str(postnum)
                 ag_info += '&'
+                postnum = 0
             ag_info += '\n' 
         connectionSocket.sendall(ag_info.encode('ascii'))
 
