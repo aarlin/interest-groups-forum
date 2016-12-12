@@ -1,0 +1,457 @@
+{
+	"discussion_groups": [
+
+	{
+		"groupid" : "1000",
+		"groupname" : "comp.programming",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	
+	},
+
+	{
+		"groupid" : "2000",
+		"groupname" : "comp.os.threads",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{	
+		"groupid" : "3000",
+		"groupname" : "comp.lang.c",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "4000",
+		"groupname" : "comp.lang.python",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "5000",
+		"groupname" : "comp.lang.javascript",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "6000",
+		"groupname" : "sci.crypt",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "7000",
+		"groupname" : "rec.arts.ascii",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "8000",
+		"groupname" : "comp.lang.java",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "9000",
+		"groupname" : "comp.lang.perl",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "10000",
+		"groupname" : "comp.lang.json",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "11000",
+		"groupname" : "comp.lang.c++",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "12000",
+		"groupname" : "comp.lang.c#",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "13000",
+		"groupname" : "comp.lang.sml",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "14000",
+		"groupname" : "comp.lang.prolog",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	},
+
+	{
+		"groupid" : "15000",
+		"groupname" : "comp.lang.assembly",
+		"posts" : [
+			{	
+				"postid" : "10",
+				"subject_line" : "How do I program this project?",
+				"content_body" : "I have a client and server project that I need to code...",
+				"author_id" : "100",
+				"timestamp" : "Nov 12 19:34:02"
+			},
+
+			{
+				"postid" : "20",
+				"subject_line" : "Java client and Python server error",
+				"content_body" : "I'm encountering an error while coding...",
+				"author_id" : "200",
+				"timestamp" : "Nov 11 08:11:34"
+			},
+
+			{
+				"postid" : "30",
+				"subject_line" : "Best language for client/server program?",
+				"content_body" : "I have a choice between...",
+				"author_id" : "300",
+				"timestamp" : "Nov 10 22:05:47"
+			}
+		]
+	}
+
+
+	]
+}
