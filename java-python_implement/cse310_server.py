@@ -1,9 +1,5 @@
 # SERVER SIDE OF CSE310 PROJECT
 
-# with open('server.json', 'rb') as f:
-#     connectionSocket.sendall(f.read())
-
-# PROBLEMS WITH N COUNTER NOT WORKING
 # PROBLEMS WITH BADLY FORMATTED COMMANDS
 
 from socket import *
@@ -202,54 +198,13 @@ while True:
             rg_subcommands = rg_buffer.getvalue().splitlines()[0].split(" ")
             rg_buffer.close()
 
-            if (rg_subcommands[0] == "n"):                                                      # IF CLIENT ENTERS SUBCOMMAND n
-                print("Command n entered")
-
-                if (default_display >= postnum):                        # WE HIT ALL THE GROUPS TO SEND
-                    print("Printed all the groups available")
-                    connectionSocket.sendall("RG 500 CLOSE\n")           # SEND SIGNAL TO KILL BREAK ag COMMAND STATE
-                    break
-                
-                try:
-                    rg_more_info = ""
-                    with open('server.json') as serverfile:                                     # OPEN THE JSON FILE
-
-                        server_data = load(serverfile)                                          # LOAD JSON FILE
-                        read_n = default_display + int(rg_subcommands[1])                       # READ UP TILL THIS VARIABLE
-                        if (read_n > postnum):                                                  # IF VARIABLE GREATER THAN POSTNUM OF THIS GROUP
-                            read_n = postnum + 1                                                # SET VARIABLE TO NUMBER OF POSTS
-
-                        for i in range(numelements):                                            # GO THROUGH ALL GROUPS
-                            if (server_data['discussion_groups'][i]['groupname'] == gname):     # IF GROUP NAME = gname
-                                for k in range(default_display, read_n):                        # READ NUMBER OF POSTS STARTING FROM WHERE WE LEFT OFF
-                                    inc_n += 1
-                                    rg_more_info += server_data['discussion_groups'][i]['posts'][k]['postid']       # GRAB POSTID
-                                    rg_more_info += '$'
-                                    rg_more_info += server_data['discussion_groups'][i]['posts'][k]['subject_line'] # GRAB SUBJECT LINE
-                                    rg_more_info += '$'
-                                    rg_more_info += server_data['discussion_groups'][i]['posts'][k]['content_body'] # GRAB CONTENT BODY
-                                    rg_more_info += '$'
-                                    rg_more_info += server_data['discussion_groups'][i]['posts'][k]['author_id']    # GRAB AUTHOR ID
-                                    rg_more_info += '$'
-                                    rg_more_info += server_data['discussion_groups'][i]['posts'][k]['timestamp']    # GRAB TIMESTAMP
-                                    rg_more_info += '&'
-                                rg_more_info += '\n'
-                                default_display += inc_n
-                                inc_n = 0
-                        connectionSocket.sendall(rg_more_info.encode('ascii'))  # SEND THE POSTS TO CLIENT
-                except IndexError:
-                    connectionSocket.sendall("Please enter a number for subcommand 'n' \n")
-                    continue
-
-            elif (rg_subcommands[0] == "p"):
-                print("COmmand p entered")
+            if (rg_subcommands[0] == "p"):
+                print("Command p entered")
                 rg_data = connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
                 rg_buffer = StringIO(256)
                 rg_buffer.write(rg_data)
                 rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")
                 rg_buffer.close()
-
-                print(rg_post_data)
                 
                 rg_post = {"postid" : rg_post_data[0],
                            "subject_line" : rg_post_data[1],
@@ -267,7 +222,7 @@ while True:
                 os.remove('server.json')
                 with open('server.json', 'w') as serverfile:
                     serverfile.write(dumps(server_data))
-
+                print('User entered a new post')
                 
             elif (rg_subcommands[0] == "q"):    # EXIT OUT OF rg SUBCOMMAND STATE
                 print("Command q entered")
