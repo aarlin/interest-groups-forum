@@ -1,6 +1,9 @@
 # SERVER SIDE OF CSE310 PROJECT
 
+# with open('server.json', 'rb') as f:
+#     connectionSocket.sendall(f.read())
 
+# PROBLEMS WITH N COUNTER NOT WORKING
 # PROBLEMS WITH BADLY FORMATTED COMMANDS
 
 from socket import *
@@ -10,10 +13,11 @@ from json import *
 from pprint import *
 from re import *
 from StringIO import *
+import os
 
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
-serverPort = 12001                          # HARD CODE SERVER PORT
+serverPort = 12009                          # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))         
 serverSocket.listen(100)                    # ONLY LISTEN TO 100 CLIENTS
@@ -168,23 +172,23 @@ while True:
         rg_info = ""
         with open('server.json') as serverfile:                                                         # OPEN UP JSON FILE
             server_data = load(serverfile)                  
-            print(numelements)
             for i in range(numelements):                                                                # FOR ALL GROUPS
                 if (server_data['discussion_groups'][i]['groupname'] == gname):                         # IF GROUP NAME = gname
                     for j in server_data['discussion_groups'][i]['posts']:                              # COUNT NUMBER OF POSTS IN THAT GROUP
                         postnum += 1
                     if (default_display > postnum):                                                     # CHANGE DEFAULT DISPLAY TO MAX POSTS IF GREATER
                         default_display = postnum
+                    default_display = postnum
                     for k in range(default_display):                                                    # FOR NUMBER SPECIFIED BY CLIENT
                         inc_n += 1
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['postid']            # GRAB POSTID
-                        rg_info += ','
+                        rg_info += '$'
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['subject_line']      # GRAB SUBJECT LINE
-                        rg_info += ','
+                        rg_info += '$'
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['content_body']      # GRAB CONTENT BODY
-                        rg_info += ','
+                        rg_info += '$'
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['author_id']         # GRAB AUTHOR ID
-                        rg_info += ','
+                        rg_info += '$'
                         rg_info += server_data['discussion_groups'][i]['posts'][k]['timestamp']         # GRAB TIMESTAMP
                         rg_info += '&'
                     rg_info += '\n'
@@ -220,15 +224,15 @@ while True:
                                 for k in range(default_display, read_n):                        # READ NUMBER OF POSTS STARTING FROM WHERE WE LEFT OFF
                                     inc_n += 1
                                     rg_more_info += server_data['discussion_groups'][i]['posts'][k]['postid']       # GRAB POSTID
-                                    rg_more_info += ','
+                                    rg_more_info += '$'
                                     rg_more_info += server_data['discussion_groups'][i]['posts'][k]['subject_line'] # GRAB SUBJECT LINE
-                                    rg_more_info += ','
+                                    rg_more_info += '$'
                                     rg_more_info += server_data['discussion_groups'][i]['posts'][k]['content_body'] # GRAB CONTENT BODY
-                                    rg_more_info += ','
+                                    rg_more_info += '$'
                                     rg_more_info += server_data['discussion_groups'][i]['posts'][k]['author_id']    # GRAB AUTHOR ID
-                                    rg_more_info += ','
+                                    rg_more_info += '$'
                                     rg_more_info += server_data['discussion_groups'][i]['posts'][k]['timestamp']    # GRAB TIMESTAMP
-                                    rg_more_info += '#'
+                                    rg_more_info += '&'
                                 rg_more_info += '\n'
                                 default_display += inc_n
                                 inc_n = 0
@@ -238,10 +242,34 @@ while True:
                     continue
 
             elif (rg_subcommands[0] == "p"):
-                connectionSocket.recv(512)                      # RECEIVE NEW POST FROM CLIENT
+                print("COmmand p entered")
+                rg_data = connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
+                rg_buffer = StringIO(256)
+                rg_buffer.write(rg_data)
+                rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")
+                rg_buffer.close()
 
+                print(rg_post_data)
+                
+                rg_post = {"postid" : rg_post_data[0],
+                           "subject_line" : rg_post_data[1],
+                           "content_body" : rg_post_data[2],
+                           "author_id" : rg_post_data[3],
+                           "timestamp" : rg_post_data[4]
+                            }
+                
+                with open('server.json') as serverfile:
+                    server_data = load(serverfile)
+                    for i in range(numelements):
+                        if (server_data['discussion_groups'][i]['groupname'] == gname):
+                            server_data['discussion_groups'][i]['posts'].append(rg_post)
+                print('Added post to discussion group' + gname)
+                os.remove('server.json')
+                with open('server.json', 'w') as serverfile:
+                    serverfile.write(dumps(server_data))
 
-            elif (rg_subcommands[0] == "q"):                    # EXIT OUT OF rg SUBCOMMAND STATE
+                
+            elif (rg_subcommands[0] == "q"):    # EXIT OUT OF rg SUBCOMMAND STATE
                 print("Command q entered")
                 print("Closed out of rg command")
                 connectionSocket.sendall("RG 500 CLOSE\n")        # SEND TO 
