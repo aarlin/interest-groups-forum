@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * for saving information on all of the posts that the user has read
  */
 package client;
 
@@ -10,16 +8,16 @@ package client;
  * @author anniecourtney
  */
 public class Post {
-    String post;
+    String postID;
     
     Post next;
     
     public Post(String post){
-        this.post=post;
+        postID=post;
     }
     @Override
     public String toString(){
-        return post;
+        return postID;
     }
     
     public void setNext(Post next){

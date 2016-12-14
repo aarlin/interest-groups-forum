@@ -109,8 +109,8 @@ class ClientThread(Thread):
                         for j in server_data['discussion_groups'][i]['posts']:                              # COUNT NUMBER OF POSTS IN THAT GROUP
                             postnum += 1
                         ag_info += '*'                                                  # SPLIT EACH GROUP NAME WITH '*' FOR THE CLIENT TO PARSE EASILY
-                        ag_info += str(postnum)                                         # ADD THE POST NUMBER WITH EACH GROUP NAME
-                        ag_info += '&'                                                  # INDICATE WHEN WE ARE DONE SENDING TO THE CLIENT
+                        ag_info += str(postnum)                                         # ADD THE POST NUMBER OF EACH GROUP
+                        ag_info += '&'                                                  # INDICATE END OF EACH GROUP NAME AND POST NUM WITH '&' FOR CLIENT TO PARSE
                         postnum = 0
                     ag_info += '\n' 
                 self.connectionSocket.sendall(ag_info.encode('ascii'))
@@ -188,7 +188,7 @@ class ClientThread(Thread):
                         rg_data = self.connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
                         rg_buffer = StringIO(256)
                         rg_buffer.write(rg_data)
-                        rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")                              # SPLIT BY THE '$' TO INDICATE SEPERATION OF DATA
+                        rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")                              # SPLIT BY THE '$' MADE BY CLIEN TO AID IN PARSING
                         rg_buffer.close()
                         
                         rg_post = {"postid" : rg_post_data[0],                                                    # CONSTRUCT A JSON POST FROM THE CLIENT'S POST DATA
