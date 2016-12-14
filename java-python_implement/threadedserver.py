@@ -13,26 +13,25 @@ from StringIO import *
 import os
 
 class ClientThread(Thread):
-    
-    def __init__(self, ip, port, connectionSocket):
+            
+    def __init__(self, ip, port, connectionSocket):             # INITIALIZE THE THREAD WITH IP, PORT AND CONNECTION SOCKET
         Thread.__init__(self)
         self.ip = ip
         self.port = port
         self.connectionSocket = connectionSocket
 
     def run(self):
-        # SERVER RUNS FOREVER
         while True:
             print('Waiting for user command\n')
             
-            received_data = self.connectionSocket.makefile("r", 0).readline()
+            received_data = self.connectionSocket.makefile("r", 0).readline()       # READ COMMAND FROM USER
             receivebuffer = StringIO(256)
             receivebuffer.write(received_data)
-            commands = receivebuffer.getvalue().splitlines()[0].split(" ")
+            commands = receivebuffer.getvalue().splitlines()[0].split(" ")          # SPLIT THE COMMAND BETWEEN SPACES FOR PARSING
             receivebuffer.close()
             
             print("Client input:")
-            print(commands)
+            print(commands)                                 # PRINT OUT WHAT THE CLIENT ENTERED ON THE SERVER TERMINAL
             
             if (commands[0] == "ag"):                       # IF CLIENT COMMAND IS ag
                 print('Entered command state of ag')    
@@ -51,11 +50,11 @@ class ClientThread(Thread):
                         ag_info += server_data['discussion_groups'][i]['groupname']     # GRAB EVERY DISCUSSION GROUP NAME UP TO NUMBER DISPLAYED
                         ag_info += '&'                                                  # DELIMITER FOR THE CLIENT TO PARSE
                     ag_info += '\n'
-                self.connectionSocket.sendall(ag_info.encode('ascii'))                       # SEND OVER THE GROUP NAMES TO CLIENT
+                self.connectionSocket.sendall(ag_info.encode('ascii'))                  # SEND OVER THE GROUP NAMES TO CLIENT
 
                 while (ag_flag == 0):                                                   # ENTERED SUBCOMMANDS FOR ag
                     print('Entered subcommands state of ag')                
-                    ag_data = self.connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
+                    ag_data = self.connectionSocket.makefile("r", 0).readline()         # RECEIVE FROM CLIENT AGAIN
                     ag_buffer = StringIO(256)
                     ag_buffer.write(ag_data)
                     ag_subcommands = ag_buffer.getvalue().splitlines()[0].split(" ")
@@ -64,9 +63,9 @@ class ClientThread(Thread):
                     if (ag_subcommands[0] == "n"):                                      # CLIENT REQUESTED n MORE GROUPS TO BE SENT
                         print("Command n entered")
 
-                        if (default_display == numelements):                        # WE HIT ALL THE GROUPS TO SEND
+                        if (default_display == numelements):                            # WE HIT ALL THE GROUPS TO SEND
                             print("Printed all the groups available")
-                            self.connectionSocket.sendall("AG 500 CLOSE\n")                # SEND SIGNAL TO KILL BREAK ag COMMAND STATE
+                            self.connectionSocket.sendall("AG 500 CLOSE\n")             # SEND SIGNAL TO KILL BREAK ag COMMAND STATE
                             break
 
                         try:
@@ -109,15 +108,15 @@ class ClientThread(Thread):
                         ag_info += server_data['discussion_groups'][i]['groupname']     # CONCAT GROUP NAME
                         for j in server_data['discussion_groups'][i]['posts']:                              # COUNT NUMBER OF POSTS IN THAT GROUP
                             postnum += 1
-                        ag_info += '*'
-                        ag_info += str(postnum)
-                        ag_info += '&'
+                        ag_info += '*'                                                  # SPLIT EACH GROUP NAME WITH '*' FOR THE CLIENT TO PARSE EASILY
+                        ag_info += str(postnum)                                         # ADD THE POST NUMBER WITH EACH GROUP NAME
+                        ag_info += '&'                                                  # INDICATE WHEN WE ARE DONE SENDING TO THE CLIENT
                         postnum = 0
                     ag_info += '\n' 
                 self.connectionSocket.sendall(ag_info.encode('ascii'))
 
                 while (sg_flag == 0):                                                   # ENTERED sg SUBCOMMAND STATE
-                    sg_data = self.connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
+                    sg_data = self.connectionSocket.makefile("r", 0).readline()         # RECEIVE FROM CLIENT AGAIN
                     sg_buffer = StringIO(256)
                     sg_buffer.write(sg_data)
                     sg_subcommands = sg_buffer.getvalue().splitlines()[0].split(" ")
@@ -126,7 +125,7 @@ class ClientThread(Thread):
                     if (sg_subcommands[0] == "q"):                                      # IF CLIENT ENTERS q THEN EXIT OUT OF sg COMMAND STATE
                         print("Command q entered")
                         print("Closed out of sg command")                   
-                        self.connectionSocket.sendall("SG 500 CLOSE\n")                        
+                        self.connectionSocket.sendall("SG 500 CLOSE\n")                      
                         break
 
 
@@ -159,11 +158,12 @@ class ClientThread(Thread):
                                 postnum += 1
                             if (default_display > postnum):                                                     # CHANGE DEFAULT DISPLAY TO MAX POSTS IF GREATER
                                 default_display = postnum
-                            default_display = postnum
+                            else:   
+                                default_display = postnum                                                       # ALWAYS GIVE THE CLIENT ALL THE POSTS
                             for k in range(default_display):                                                    # FOR NUMBER SPECIFIED BY CLIENT
                                 inc_n += 1
                                 rg_info += server_data['discussion_groups'][i]['posts'][k]['postid']            # GRAB POSTID
-                                rg_info += '$'
+                                rg_info += '$'                                                                  # SEPERATE BY '$' FOR EASY PARSING BY THE CLIENT
                                 rg_info += server_data['discussion_groups'][i]['posts'][k]['subject_line']      # GRAB SUBJECT LINE
                                 rg_info += '$'
                                 rg_info += server_data['discussion_groups'][i]['posts'][k]['content_body']      # GRAB CONTENT BODY
@@ -188,53 +188,54 @@ class ClientThread(Thread):
                         rg_data = self.connectionSocket.makefile("r", 0).readline()                                # RECEIVE FROM CLIENT AGAIN
                         rg_buffer = StringIO(256)
                         rg_buffer.write(rg_data)
-                        rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")
+                        rg_post_data = rg_buffer.getvalue().splitlines()[0].split("$")                              # SPLIT BY THE '$' TO INDICATE SEPERATION OF DATA
                         rg_buffer.close()
                         
-                        rg_post = {"postid" : rg_post_data[0],
+                        rg_post = {"postid" : rg_post_data[0],                                                    # CONSTRUCT A JSON POST FROM THE CLIENT'S POST DATA
                                    "subject_line" : rg_post_data[1],
                                    "content_body" : rg_post_data[2],
                                    "author_id" : rg_post_data[3],
                                    "timestamp" : rg_post_data[4]
                                     }
                         
-                        with open('server.json') as serverfile:
+                        with open('server.json') as serverfile:                                     # OPEN JSON FILE
                             server_data = load(serverfile)
                             for i in range(numelements):
-                                if (server_data['discussion_groups'][i]['groupname'] == gname):
-                                    server_data['discussion_groups'][i]['posts'].append(rg_post)
-                        print('Added post to discussion group' + gname)
-                        os.remove('server.json')
-                        with open('server.json', 'w') as serverfile:
+                                if (server_data['discussion_groups'][i]['groupname'] == gname):     # FIND WHERE CLIENT'S GROUP NAME ENTERED FROM rg COMMAND
+                                    server_data['discussion_groups'][i]['posts'].append(rg_post)    # ADD NEW POST TO THAT GROUP
+                        print('Added post to discussion group ' + gname)
+                        os.remove('server.json')                                                    # REMOVE THE JSON FILE
+                        with open('server.json', 'w') as serverfile:                                # CREATE A NEW JSON FILE WITH POST ADDED
                             serverfile.write(dumps(server_data))
                         print('User entered a new post')
                         
-                    elif (rg_subcommands[0] == "q"):    # EXIT OUT OF rg SUBCOMMAND STATE
+                    elif (rg_subcommands[0] == "q"):                                                # EXIT OUT OF rg SUBCOMMAND STATE
                         print("Command q entered")
                         print("Closed out of rg command")
-                        self.connectionSocket.sendall("RG 500 CLOSE\n")        # SEND TO 
+                        self.connectionSocket.sendall("RG 500 CLOSE\n")                             # IF CLIENT ENTERS q THEN EXIT OUT OF rg COMMAND STATE
                         break
 
                                     
-            elif (commands[0] == "logout"):                             # ADDED LOGOUT COMMAND IF IN COMMAND STATE
+            elif (commands[0] == "logout"):                                                         # ADDED LOGOUT COMMAND IF IN COMMAND STATE
                 self.connectionSocket.send('Closing your connection\n')
                 print('Closing connection to client\n')
                 self.connectionSocket.close()    
             else:
-                self.connectionSocket.sendall("BAD COMMAND\n")                 # CLIENT SENT BAD COMMAND, ASK FOR ANOTHER
+                self.connectionSocket.sendall("BAD COMMAND\n")                                      # CLIENT SENT BAD COMMAND, ASK FOR ANOTHER
                 continue
-        serverSocket.close()
+        #serverSocket.close()
     
     
 
 
 # SERVER IS STARTED AND WAITS AT A KNOWN PORT FOR REQUESTS FROM CLIENTS
-serverPort = 12009                          # HARD CODE SERVER PORT
+serverPort = 12001                          # HARD CODE SERVER PORT
 serverSocket = socket(AF_INET, SOCK_STREAM) # CREATING SOCKET AND BINDING IT TO PORT
 serverSocket.bind(('', serverPort))         
-threads = []
+threads = []                                # LIST OF THREADS
 
 # CREATE FLAGS FOR SUBCOMMAND WHILE LOOP
+# THEY WILL NEVER CHANGE
 ag_flag = 0     
 sg_flag = 0
 rg_flag = 0
@@ -250,12 +251,12 @@ with open('server.json') as serverfile:
 
 # ACCEPT NEW CLIENT TO SERVER
 while True:
-    serverSocket.listen(100)                    # LISTEN TO 100 CLIENTS
+    serverSocket.listen(100)                                            # LISTEN TO 100 CLIENTS
     print('The server is setup and ready to receive from client\n')
-    connectionSocket, (ip,port) = serverSocket.accept()
-    nthread = ClientThread(ip,port, connectionSocket)
-    nthread.start()
-    threads.append(nthread)
+    connectionSocket, (ip,port) = serverSocket.accept()                 # ACCEPT A CLIENT 
+    nthread = ClientThread(ip,port, connectionSocket)                   # CREATE A THREAD FROM CLIENT ACCEPTED WITH OWN IP, PORT, AND SOCKET
+    nthread.start()                                                     # START RUNNING THE THREAD
+    threads.append(nthread)                                             # ADD THREAD TO LIST
 
 for thread in threads:
     thread.join()
