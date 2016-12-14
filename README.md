@@ -4,6 +4,6 @@ CSE 310 Fall 2016 Project
 
 
 Group 28  
-Aaron Lin  
-Daniel Khuu  
-Annie Courtney  
+Aaron Lin  		-- Server 
+Daniel Khuu  	-- Documentation
+Annie Courtney  -- Client
